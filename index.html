@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f7ece9" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#211620" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f0f10" media="(prefers-color-scheme: dark)">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Wardrobe">
-  <meta name="description" content="Your closet, today's outfit and a wish list.">
-  <title>Wardrobe</title>
+  <meta name="apple-mobile-web-app-title" content="Worn Well">
+  <meta name="description" content="Your closet, outfits planned around the weather, and a wish list.">
+  <title>Worn Well</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=DM+Mono:wght@500&family=Figtree:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=Syne:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -45,19 +45,12 @@
 
   <main id="main"></main>
 
+  <button class="building" id="building" data-a="tab" data-tab="plan" hidden><span id="buildingText"></span><b>View outfit</b></button>
+
   <nav class="tabs" aria-label="Sections">
-    <button data-a="tab" data-tab="closet">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 6.5a1.5 1.5 0 1 1 2.6 1c-.6.6-1.1 1-1.1 2v.5l8.5 6.2c.8.6.4 1.8-.6 1.8H4.1c-1 0-1.4-1.2-.6-1.8L12 10"/></svg>
-      <span>Closet</span>
-    </button>
-    <button data-a="tab" data-tab="today">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg>
-      <span>Today</span><i class="badge" id="badge" hidden></i>
-    </button>
-    <button data-a="tab" data-tab="wish">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
-      <span>Wish list</span>
-    </button>
+    <button data-a="tab" data-tab="closet">Closet</button>
+    <button data-a="tab" data-tab="plan">Outfits<i class="badge" id="badge" hidden></i></button>
+    <button data-a="tab" data-tab="wish">Wish list</button>
   </nav>
 
   <div class="scrim" id="scrim" data-a="close" hidden></div>

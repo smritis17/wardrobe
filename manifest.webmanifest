@@ -1,12 +1,12 @@
 {
-  "name": "Wardrobe",
-  "short_name": "Wardrobe",
-  "description": "Your closet, today's outfit and a wish list.",
+  "name": "Worn Well",
+  "short_name": "Worn Well",
+  "description": "Your closet, outfits planned around the weather, and a wish list.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f7ece9",
-  "theme_color": "#f7ece9",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
