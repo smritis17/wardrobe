@@ -12,7 +12,7 @@ Live at https://smritis17.github.io/wardrobe/ (open in Safari, then Share → Ad
 - **Colour**, **Storage** and **Wear** are more views of the same closet: sorted by colour, grouped by storage place, and wear insights (most worn, not worn this year, cost per wear).
 - **Wear counts** are kept for tops, bottoms, dresses and outerwear, not for shoes, bags, sunglasses or accessories.
 - **Wish list**: paste a shop link and its photo and title are fetched.
-- **Looks**: three takes on a white gallery style, switched in Settings.
+- **Look and colour**: three looks (Colour wash, Editorial, Contact sheet) and six palettes (Maroon, Bordeaux, Gallery, Navy, Olive, Noir), both switched in Settings.
 
 ## Where the data lives
 

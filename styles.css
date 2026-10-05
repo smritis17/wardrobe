@@ -8,7 +8,7 @@
   --safe-b: env(safe-area-inset-bottom, 0px);
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #0f0f10; --fg: #f3f3f0; --muted: #a3a3aa; --tile: #56565d; --mix: #56565d; --line: #2c2c31; --field: #1a1a1d;
+  :root:not([data-palette]), [data-palette="gallery"] { --bg: #0f0f10; --fg: #f3f3f0; --muted: #a3a3aa; --tile: #56565d; --mix: #56565d; --line: #2c2c31; --field: #1a1a1d;
     --accent: #8597ff; --on-accent: #0f0f10; --warn: #ff8a80; --shadow: rgba(0, 0, 0, .45); color-scheme: dark; }
 }
 
@@ -190,21 +190,36 @@ main { max-width: 560px; margin: 0 auto; padding: 8px 20px 0; }
 
 @media (min-width: 520px) { .grid { grid-template-columns: repeat(4, 1fr); } .swgrid { grid-template-columns: repeat(7, 1fr); } }
 
-/* ---------- looks ---------- */
+/* ---------- palettes: colour only. Gallery (above) follows the phone's light/dark setting; the rest are fixed. ---------- */
+[data-palette="maroon"] { --bg: #f8f5f1; --fg: #3d0c18; --muted: #86656b; --tile: #ece5dd; --mix: #ece5dd; --line: #ddd2c9; --field: #f1ebe4;
+  --accent: #8a1c32; --on-accent: #fff8f3; --warn: #b3261e; --shadow: rgba(61, 12, 24, .22); }
+[data-palette="bordeaux"] { --bg: #2b0912; --fg: #f6ece4; --muted: #c2a3a3; --tile: #6b3d47; --mix: #6b3d47; --line: #4c1f2a; --field: #3a111c;
+  --accent: #dcb67f; --on-accent: #2b0912; --warn: #ffa193; --shadow: rgba(0, 0, 0, .45); color-scheme: dark; }
+[data-palette="navy"] { --bg: #f4f6f9; --fg: #0d1b36; --muted: #5d6a82; --tile: #e3e8ef; --mix: #e3e8ef; --line: #d3dae4; --field: #eaeef4;
+  --accent: #2f6bff; --on-accent: #ffffff; --warn: #b3261e; --shadow: rgba(13, 27, 54, .2); }
+[data-palette="olive"] { --bg: #f5f5ee; --fg: #20240f; --muted: #6b6f55; --tile: #e7e8da; --mix: #e7e8da; --line: #d6d8c5; --field: #eeeee3;
+  --accent: #66751c; --on-accent: #fbfcf2; --warn: #a63a1a; --shadow: rgba(32, 36, 15, .2); }
+[data-palette="noir"] { --bg: #0c0c0d; --fg: #f4f2ee; --muted: #a09d98; --tile: #55535a; --mix: #55535a; --line: #2a292c; --field: #18181a;
+  --accent: #c9334b; --on-accent: #ffffff; --warn: #ff8a80; --shadow: rgba(0, 0, 0, .5); color-scheme: dark; }
+.pal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pal button { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 10px; border: 1px solid var(--line); border-radius: 3px; font-size: .9rem; }
+.pal button.on { border-color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); font-weight: 600; }
+.pal i { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line); }
+
+/* ---------- looks: type and tile treatment ---------- */
 
 /* Colour wash: every tile takes a tint of the piece on it, so the wall is coloured by your clothes. */
 [data-look="wash"] .t:not(.more) { background: color-mix(in srgb, var(--c, var(--mix)) 24%, var(--mix)); }
 
-/* Editorial: a magazine spread. Italic serif headlines in lower case, one red. */
-[data-look="editorial"] { --accent: #dd3b22; --display: "Instrument Serif", "Didot", "Bodoni MT", serif; --tile: #f1efea; }
+/* Editorial: a magazine spread. Italic serif headlines in lower case; wear counts in the accent. */
+[data-look="editorial"] { --display: "Instrument Serif", "Didot", "Bodoni MT", serif; }
 [data-look="editorial"] h1 { font: italic 400 3.1rem/.9 var(--display); text-transform: lowercase; letter-spacing: -.01em; }
 [data-look="editorial"] .sub, [data-look="editorial"] .sheet-head h2, [data-look="editorial"] .empty p:first-child:not(.muted) { font: italic 400 1.7rem/1.1 var(--display); text-transform: none; letter-spacing: 0; }
 [data-look="editorial"] .sub span { font-style: normal; }
 [data-look="editorial"] .piece figcaption span { color: var(--accent); font-weight: 600; }
-@media (prefers-color-scheme: dark) { [data-look="editorial"] { --accent: #ff6a52; --tile: #56565d; } }
 
-/* Contact sheet: numbered frames, and a red grease-pencil ring around what you picked. */
-[data-look="contact"] { --accent: #e02b20; --display: "DM Mono", "Menlo", monospace; }
+/* Contact sheet: numbered frames, and a grease-pencil ring around what you picked. */
+[data-look="contact"] { --display: "DM Mono", "Menlo", monospace; }
 [data-look="contact"] h1 { font: 500 1.6rem/1 var(--display); letter-spacing: .08em; }
 [data-look="contact"] .sub, [data-look="contact"] .sheet-head h2 { font: 500 .9rem/1.2 var(--display); letter-spacing: .08em; }
 [data-look="contact"] .grid { counter-reset: frame; gap: 16px 8px; }
@@ -214,4 +229,3 @@ main { max-width: 560px; margin: 0 auto; padding: 8px 20px 0; }
 [data-look="contact"] .piece:has(.pick.on) .t::before { content: ""; position: absolute; inset: -5px -7px; border: 3px solid var(--accent); border-radius: 48% 52% 55% 45% / 54% 46% 52% 48%; transform: rotate(-7deg); pointer-events: none; z-index: 1; }
 [data-look="contact"] .piece figcaption span { font: 600 1.15rem/.9 "Caveat", "Bradley Hand", cursive; color: var(--accent); }
 [data-look="contact"] .tag { font: 500 .6rem/1.7 var(--display); }
-@media (prefers-color-scheme: dark) { [data-look="contact"] { --accent: #ff5a4f; } }
