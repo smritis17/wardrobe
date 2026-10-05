@@ -1,4 +1,4 @@
-// Worn Well: closet, outfit planning and wish list.
+// Smriti's Wardrobe: closet, outfit planning and wish list.
 // Everything stays on this phone: details in localStorage, photos in IndexedDB.
 // Two things leave it, only when used: your city's coordinates (weather) and a wish's shop link (its photo).
 

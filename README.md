@@ -1,6 +1,8 @@
-# Worn Well
+# Smriti's Wardrobe
 
 A private closet app for my phone: see every piece, plan outfits around the weather, track what's in storage and how often things get worn, and keep a wish list.
+
+Live at https://smritis17.github.io/wardrobe/ (open in Safari, then Share → Add to Home Screen).
 
 ## How it works
 
