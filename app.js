@@ -22,7 +22,9 @@ const OCCASIONS = ['Everyday', 'Work', 'Workout', 'Going out'];
 const LOOKS = [['wash', 'Colour wash'], ['editorial', 'Editorial'], ['contact', 'Contact sheet']];
 // palette -> [name, ground, accent] (the two colours on its swatch in Settings; the full set is in styles.css)
 const PALETTES = { maroon: ['Maroon', '#f8f5f1', '#8a1c32'], bordeaux: ['Bordeaux', '#2b0912', '#dcb67f'], gallery: ['Gallery', '#ffffff', '#1f3fff'],
-  navy: ['Navy', '#f4f6f9', '#0d1b36'], olive: ['Olive', '#f5f5ee', '#66751c'], noir: ['Noir', '#0c0c0d', '#c9334b'] };
+  navy: ['Navy', '#f4f6f9', '#0d1b36'], olive: ['Olive', '#f5f5ee', '#66751c'], noir: ['Noir', '#0c0c0d', '#c9334b'],
+  butter: ['Butter', '#f8f0c6', '#1f3fff'], pistachio: ['Pistachio', '#e6efd8', '#e2581e'], lilac: ['Lilac', '#ece7f8', '#f0561d'],
+  sky: ['Sky', '#dfeaf5', '#cf2e2e'], cocoa: ['Cocoa', '#2a1810', '#a6ceff'], matcha: ['Matcha', '#12291c', '#cdb9ff'] };
 const PALETTE = ['#2a2227', '#5b5560', '#a9a5a8', '#f4f1ea', '#e9dcc3', '#c9b79a', '#9a7b5b', '#5e4034', '#7a2738', '#b8475a',
   '#e9a3b5', '#d9783c', '#e8c66a', '#6d7f5c', '#3f7a56', '#a9c3e0', '#4a6fa5', '#26324a', '#7b5ea7', '#c3b1e1'];
 const FAMILIES = [['Black', '#2a2227'], ['Grey', '#a9a5a8'], ['White', '#f4f1ea'], ['Neutral', '#c9b79a'], ['Brown', '#6b4a3a'], ['Red', '#b8475a'],
