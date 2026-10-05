@@ -1,12 +1,12 @@
-/* White walls, square tiles tinted by the piece on them, one accent. Colour comes from the palette and
-   headings from the type style, both chosen in Settings; their token blocks are at the bottom. */
+/* Square tiles tinted by the piece on them, Didone capitals for headings, one accent.
+   Colour comes from the palette chosen in Settings; the palette blocks are at the bottom. */
 :root {
   --bg: #ffffff; --fg: #17090c; --muted: #75686a; --tile: #f0ecea; --line: #e3dcda; --field: #f7f4f3;
   --accent: #8f1024; --on-accent: #ffffff; --warn: #b3261e; --shadow: rgba(23, 9, 12, .2);
   --body: "Figtree", "Helvetica Neue", Arial, sans-serif;
-  --h1: 800 1.7rem/1 "Syne", "Helvetica Neue", Arial, sans-serif; --h1-case: uppercase; --h1-track: -.01em;
-  --h2: 800 1.2rem/1 "Syne", "Helvetica Neue", Arial, sans-serif; --h2-case: uppercase; --h2-track: 0em;
-  --sub: 700 .8rem/1.2 "Figtree", "Helvetica Neue", Arial, sans-serif; --sub-case: uppercase; --sub-track: .12em;
+  --h1: 500 2.1rem/1 "Bodoni Moda", "Didot", "Bodoni MT", serif; --h1-case: uppercase; --h1-track: .06em;
+  --h2: 500 1.4rem/1 "Bodoni Moda", "Didot", "Bodoni MT", serif; --h2-case: uppercase; --h2-track: .06em;
+  --sub: 700 .8rem/1.2 "Figtree", "Helvetica Neue", Arial, sans-serif; --sub-case: uppercase; --sub-track: .18em;
   --safe-b: env(safe-area-inset-bottom, 0px);
 }
 
@@ -197,20 +197,3 @@ main { max-width: 560px; margin: 0 auto; padding: 8px 20px 0; }
 .pal button { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 10px; border: 1px solid var(--line); border-radius: 3px; font-size: .9rem; }
 .pal button.on { border-color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); font-weight: 600; }
 .pal i { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line); }
-.pal b { font-weight: 400; font-size: 1.15rem; line-height: 1; }
-
-/* ---------- type styles: headings only. Wide (Syne) is the :root default above. ---------- */
-[data-look="editorial"] { --h1: italic 400 3.1rem/.9 "Instrument Serif", "Didot", serif; --h1-case: lowercase;
-  --h2: italic 400 1.9rem/1 "Instrument Serif", "Didot", serif; --h2-case: none;
-  --sub: italic 400 1.6rem/1.1 "Instrument Serif", "Didot", serif; --sub-case: none; --sub-track: 0em; }
-[data-look="didone"] { --h1: 500 2.1rem/1 "Bodoni Moda", "Didot", "Bodoni MT", serif; --h1-track: .06em;
-  --h2: 500 1.4rem/1 "Bodoni Moda", "Didot", "Bodoni MT", serif; --h2-track: .06em; --sub-track: .18em; }
-[data-look="poster"] { --h1: 400 3.1rem/.85 "Bebas Neue", "Impact", sans-serif; --h1-track: .02em;
-  --h2: 400 2rem/1 "Bebas Neue", "Impact", sans-serif; --h2-track: .02em;
-  --sub: 400 1.35rem/1 "Bebas Neue", "Impact", sans-serif; --sub-track: .04em; }
-[data-look="classic"] { --h1: 500 3rem/.9 "Cormorant Garamond", "Garamond", "Times New Roman", serif; --h1-case: none;
-  --h2: 500 1.9rem/1 "Cormorant Garamond", "Garamond", serif; --h2-case: none;
-  --sub: 600 1.4rem/1.1 "Cormorant Garamond", "Garamond", serif; --sub-case: none; --sub-track: 0em; }
-[data-look="mono"] { --h1: 500 1.6rem/1 "DM Mono", "Menlo", monospace; --h1-track: .08em;
-  --h2: 500 1.1rem/1 "DM Mono", "Menlo", monospace; --h2-track: .08em;
-  --sub: 500 .85rem/1.2 "DM Mono", "Menlo", monospace; --sub-track: .08em; }

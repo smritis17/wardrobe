@@ -12,7 +12,7 @@ Live at https://smritis17.github.io/wardrobe/ (open in Safari, then Share → Ad
 - **Colour**, **Storage** and **Wear** are more views of the same closet: sorted by colour, grouped by storage place, and wear insights (most worn, not worn this year, cost per wear).
 - **Wear counts** are kept for tops, bottoms, dresses and outerwear, not for shoes, bags, sunglasses or accessories.
 - **Wish list**: paste a shop link and its photo and title are fetched.
-- **Colour and type**: three palettes (Bordeaux, Cocoa, Garnet) and six heading type styles, both switched in Settings.
+- **Colour and type**: three palettes (Bordeaux, Cocoa, Garnet) switched in Settings. Headings are set in Bodoni Moda.
 
 ## Where the data lives
 

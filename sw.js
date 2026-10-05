@@ -1,6 +1,6 @@
 // Offline support: serve the app from cache instantly, refresh the cache in the background.
 // Bump CACHE on every deploy so phones pick up the new version.
-const CACHE = 'wardrobe-v4';
+const CACHE = 'wardrobe-v5';
 const MODEL = 'wardrobe-cutout'; // the background-removal model; kept across deploys so it downloads once
 const ASSETS = ['./', './index.html', './styles.css', './app.js', './cutout.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
