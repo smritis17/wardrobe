@@ -344,6 +344,125 @@ function openItem(it, preset = {}) {
       </div>
     </div>
     <label class="field"><span>Name</span><input id="fName" value="${esc(D.name)}" placeholder="White tee" autocomplete="off" enterkeyhint="done"></label>
+    <div class="field"><span>Type</span><div class="types">${Object.entries(TYPES).map(([k, [l]]) =>
+      `<button type="button" data-a="type" data-type="${k}">${shape(k, 'currentColor')}<small>${l}</small></button>`).join('')}</div></div>
+    <div class="field"><span>Colour</span><div class="swatches">${PALETTE.map(c =>
+      `<button type="button" data-a="color" data-color="${c}" style="background:${c}" aria-label="Colour ${c}"></button>`).join('')}
+      <label class="custom" aria-label="Another colour"><input type="color" id="fColor" value="${hexOk(D.color)}"></label></div></div>
+    <div class="field"><span>Where</span><div class="seg"><button type="button" data-a="where" data-stored="">In closet</button><button type="button" data-a="where" data-stored="1">In storage</button></div>
+      <input id="fPlace" value="${esc(D.place)}" list="places" placeholder="Bin 2, under the bed…" autocomplete="off" enterkeyhint="done">
+      <datalist id="places">${places.map(p => `<option value="${esc(p)}">`).join('')}</datalist></div>
+    <details class="extra"${D.seasons.length || D.price ? ' open' : ''}><summary>Season and price</summary>
+      <div class="field"><span>Season (leave empty for all year)</span><div class="chips wrap">${SEASONS.map(s =>
+        `<button type="button" data-a="season" data-s="${s}">${s}</button>`).join('')}</div></div>
+      <label class="field"><span>Price paid (optional)</span><input id="fPrice" value="${esc(D.price)}" inputmode="decimal" placeholder="$" autocomplete="off" enterkeyhint="done"></label>
+    </details>
+    <div class="wears" id="wears"></div>
+    <button class="btn primary wide">Save</button>
+    ${D.isNew ? '<button type="button" class="btn soft wide" data-a="saveMore">Save and add another</button>'
+      : '<button type="button" class="quiet danger" data-a="del">Delete piece</button>'}
+  </form>`);
+  paint();
+}
+
+// Refresh the parts of the piece sheet that depend on the draft, without touching what's being typed.
+function paint() {
+  if (!D) return;
+  $('#pv').innerHTML = art(D);
+  $('#pv').style.setProperty('--c', hexOk(D.color));
+  $('#photoBtn').textContent = D.photo ? 'Replace photo' : 'Add photo';
+  $('#photoHint').textContent = D.status || (D.photo === 'raw' ? 'Saved without a cutout. Add the photo again to retry.'
+    : D.photo ? '' : 'Optional. The background is removed for you.');
+  $('#rmPhoto').hidden = !D.photo || !!D.status;
+  const on = (sel, test) => $('#sheet').querySelectorAll(sel).forEach(b => b.classList.toggle('on', test(b.dataset)));
+  on('[data-type]', d => d.type === D.type);
+  on('[data-color]', d => d.color === D.color);
+  on('[data-stored]', d => !!d.stored === D.stored);
+  on('[data-s]', d => D.seasons.includes(d.s));
+  $('#sheet .custom').classList.toggle('on', !PALETTE.includes(D.color));
+  $('#sheet .custom').style.background = PALETTE.includes(D.color) ? '' : D.color;
+  $('#fPlace').hidden = !D.stored;
+  const last = [...D.wears].sort().pop();
+  $('#wears').hidden = !counted(D) || D.isNew;
+  $('#wears').innerHTML = `<span>Worn <b>${wornThisYear(D)}×</b> in ${today().slice(0, 4)}${last ? ` · last ${niceDate(last)}` : ''}</span>
+    <button type="button" data-a="wearLess" aria-label="One fewer wear">−</button><button type="button" data-a="wearMore" aria-label="Add a wear today">+</button>`;
+}
+
+function saveItem(more) {
+  const { id, type, color, photo, wears, seasons } = D;
+  const place = D.stored ? ($('#fPlace').value.trim() || 'Storage') : '';
+  const it = { id, name: $('#fName').value.trim(), type, color, place, photo, wears, seasons, price: amount($('#fPrice').value), added: D.added || Date.now() };
+  const i = S.items.findIndex(x => x.id === id);
+  i < 0 ? S.items.push(it) : S.items[i] = it;
+  save();
+  D = null;
+  more ? openItem(null, { type, place, seasons }) : closeSheet();
+  render();
+}
+
+// Runs in the background so pieces can keep being added while a photo is cut out.
+async function addPhoto(file) {
+  const d = D, id = d.id;
+  const status = t => { d.status = t; if (D === d) paint(); };
+  let kind = 'cut', color;
+  status('Cutting out…');
+  try {
+    const { cutout, plain } = await import('./cutout.js');
+    try {
+      const r = await cutout(file, status);
+      color = r.color;
+      await putPhoto(id, r.blob);
+    } catch (err) {
+      console.warn('Cutout failed, keeping the plain photo', err);
+      kind = 'raw';
+      await putPhoto(id, await plain(file));
+    }
+  } catch (err) {
+    console.warn(err);
+    status('');
+    return toast("Couldn't read that photo");
+  }
+  d.status = '';
+  const saved = item(id);
+  if (!saved && D !== d) return delPhoto(id); // sheet was closed without saving
+  for (const t of [saved, D === d ? d : null]) {
+    if (!t) continue;
+    t.photo = kind;
+    if (color && !d.colorTouched) t.color = color;
+  }
+  if (saved) { save(); render(); }
+  if (D === d) paint();
+}
+
+function openWish(w) {
+  W = w ? { ...w } : { id: uid(), name: '', url: '', price: '', note: '', img: '', isNew: true };
+  openSheet(`<form id="wishForm">${head(W.isNew ? 'New wish' : 'Edit wish')}
+    <label class="field"><span>Link</span><input id="wUrl" inputmode="url" autocapitalize="off" value="${esc(W.url)}" placeholder="Paste the shop link" autocomplete="off"></label>
+    <label class="field"><span>What is it</span><input id="wName" value="${esc(W.name)}" placeholder="Leave empty to use the shop's title" autocomplete="off"></label>
+    <label class="field"><span>Price</span><input id="wPrice" value="${esc(W.price)}" placeholder="$120" autocomplete="off"></label>
+    <label class="field"><span>Note</span><input id="wNote" value="${esc(W.note)}" placeholder="Size, colour, wait for a sale…" autocomplete="off"></label>
+    <button class="btn primary wide">Save</button>
+    ${W.isNew ? '' : `<button type="button" class="btn soft wide" data-a="got">Got it, move to closet</button>
+      <button type="button" class="quiet danger" data-a="delWish">Delete</button>`}
+  </form>`);
+}
+// Fetch the shop page's photo (and its title, if the wish has no name) through microlink.io's free preview service.
+async function preview(id, url) {
+  try {
+    const d = (await (await fetch('https://api.microlink.io/?url=' + encodeURIComponent(url))).json()).data || {};
+    const w = S.wishes.find(x => x.id === id);
+    if (!w || w.url !== url) return;
+    w.img = d.image?.url || '';
+    if (!w.name && d.title) w.name = d.title.slice(0, 80);
+    save();
+    if (tab === 'wish') render();
+  } catch (err) { console.warn('No preview for', url, err); }
+}
+
+async function openSettings() {
+  openSheet(`${head('Settings')}
+    <div class="field"><span>Colour</span><div class="pal">${Object.entries(PALETTES).map(([k, [name, ground, accent]]) =>
+      `<button data-a="palette" data-p="${k}" class="${S.palette === k ? 'on' : ''}"><i style="background:linear-gradient(135deg,${ground} 50%,${accent} 50%)"></i>${name}</button>`).join('')}</div></div>
     <div class="field"><span>Weather for ${S.place ? esc(S.place.name) : 'your city'}</span>
       <div class="inline"><input id="city" placeholder="${S.place ? 'Change city' : 'Type your city'}" autocomplete="off" enterkeyhint="search"><button class="btn soft small" data-a="findCity">Find</button></div>
       <div id="cities"></div>
